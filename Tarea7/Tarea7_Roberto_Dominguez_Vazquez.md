@@ -15,7 +15,7 @@ He realizado la tarea en varias fases. En una primera fase no he trabajado con t
 
 En primer lugar he creado la estructura de carpetas siguiente:
 
-![Texto&#x0A;&#x0A;El contenido generado por IA puede ser incorrecto.](/images/Aspose.Words.3425e34c-12dd-47a1-b11a-2f13e3316870.001.png)
+![Texto&#x0A;&#x0A;El contenido generado por IA puede ser incorrecto.](images/Aspose.Words.3425e34c-12dd-47a1-b11a-2f13e3316870.001.png)
 
 Ahora ejecuto el playbook (que hace el despliegue en srv1) y el resultado es el siguiente….
 
@@ -82,3 +82,4 @@ ansible-playbook lamp\_v4.yml --ask-vault-pass
 Por supuesto en cualquier caso el despliegue de la plantilla muestra que estamos trabajando con la versión 4 tal como se ve en index.php
 
 ![Interfaz de usuario gráfica, Texto, Aplicación&#x0A;&#x0A;El contenido generado por IA puede ser incorrecto.](/images/Aspose.Words.3425e34c-12dd-47a1-b11a-2f13e3316870.013.png)
+
