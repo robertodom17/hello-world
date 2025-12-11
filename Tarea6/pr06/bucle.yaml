@@ -1,0 +1,27 @@
+---
+- name: Trabajar con JINJA2. Montar APACHE
+  hosts: srv1
+  vars:
+    user_age: 30
+    permiso: yes
+    productos:
+      - camisa
+      - zapatos
+      - camiseta
+
+  tasks:
+  - name: Instalar Apache
+    ansible.builtin.apt:
+      name: apache2
+      state: present
+      update_cache: yes
+
+  - name: Copiar pagina WEB
+    ansible.builtin.template:
+      src: plantillas/bucles.j2
+      dest: /var/www/html/index.html
+
+  - name: Arrancar Apache
+    ansible.builtin.service:
+      name: apache2
+      state: started

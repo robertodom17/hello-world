@@ -1,0 +1,10 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for mysql
+
+# Contraseña del usuario administrador por defecto
+mysql_root_password: "abc123."
+mysql_users: |
+  guest:
+    password: "guestpw"
+    priv:

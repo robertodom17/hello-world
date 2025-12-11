@@ -1,0 +1,9 @@
+web1: Este es el sitio web 1
+web2: Este es el sitio web 2
+
+vhosts:
+  - servername: grupo1.org
+    documentroot: /var/www/grupo1
+  - servername: grupo2.org
+    documentroot: /var/www/grupo2
+    serveradmin: root@gmail.com

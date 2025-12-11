@@ -1,0 +1,28 @@
+---
+- name: Variables dentro de playbook
+  hosts: srv1
+  vars:
+    mensaje: "Esto es un mensaje de Ansible"
+    curso: "Curso de platega"
+    entornos:
+      - "desarrollo"
+      - "producción"
+      - "testing"
+    equipos:
+      tipo: "Linux"
+      memoria: "8GB de RAM"
+      almacenamiento: "250GB"
+
+  tasks:
+    - name: Variables clave-valor
+      ansible.builtin.debug:
+        msg: "Texto de las variables: {{mensaje}} para el {{curso}}"
+
+    - name: Variables array
+      ansible.builtin.debug:
+        msg: "Entornos disponibles {{ entornos }}. El primer entorno es es {{ entornos[0] }} y los otros entornos son {{ entornos[1:3] }}"
+
+    - name: Variables diccionario
+      ansible.builtin.debug:
+        msg: "Las características de los ordenadores de desarrollo son: {{ equipos }} y tienen {{ equipos.almacenamiento }} de almacenamiento"
+      

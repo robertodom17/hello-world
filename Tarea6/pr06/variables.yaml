@@ -1,0 +1,9 @@
+---
+- name: Uso de Jinja2
+  hosts: srv1
+
+  tasks:
+  - name: Generación de plantilla
+    ansible.builtin.template:
+      src: plantillas/variables.j2
+      dest: /tmp/salida.txt

@@ -1,0 +1,15 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for mariadb
+- name: Instalar {{ software }}
+  ansible.builtin.apt: 
+    # name: mariadb-server
+    name: "{{ software }}"
+    state: present
+    update_cache: yes
+
+- name: Arrancar {{ servicio }}
+  ansible.builtin.service:
+    # name: mariadb
+    name: "{{ servicio }}"
+    state: started

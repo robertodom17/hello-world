@@ -1,0 +1,131 @@
+---
+- name: Instalar y configurar slapd mediante módulo debconf
+  hosts: srv1
+
+  tasks:
+    - name: Configurar shared/organization
+      ansible.builtin.debconf:
+        name: slapd
+        question: shared/organization
+        vtype: string
+        value: nodomain
+
+    - name: Configurar slapd/domain
+      ansible.builtin.debconf:
+        name: slapd
+        question: slapd/domain
+        vtype: string
+        value: nodomain
+
+    - name: Configurar slapd/dump_database
+      ansible.builtin.debconf:
+        name: slapd
+        question: slapd/dump_database
+        vtype: select
+        value: when needed
+
+    - name: Configurar slapd/dump_database_destdir
+      ansible.builtin.debconf:
+        name: slapd
+        question: slapd/dump_database_destdir
+        vtype: string
+        value: /var/backups/slapd-VERSION
+
+    - name: Configurar slapd/internal/adminpw
+      ansible.builtin.debconf:
+        name: slapd
+        question: slapd/internal/adminpw
+        vtype: password
+        value: abc123.    
+        
+    - name: Configurar slapd/internal/generated_adminpw
+      ansible.builtin.debconf:
+        name: slapd
+        question: slapd/internal/generated_adminpw
+        vtype: password
+        value: abc123.
+        
+    - name: Configurar slapd/invalid_config
+      ansible.builtin.debconf:
+        name: slapd
+        question: slapd/invalid_config
+        vtype: boolean
+        value: true
+        
+    - name: Configurar slapd/move_old_database
+      ansible.builtin.debconf:
+        name: slapd
+        question: slapd/move_old_database
+        vtype: boolean
+        value: true
+        
+    - name: Configurar slapd/no_configuration
+      ansible.builtin.debconf:
+        name: slapd
+        question: slapd/no_configuration
+        vtype: boolean
+        value: false
+        
+    - name: Configurar slapd/password1
+      ansible.builtin.debconf:
+        name: slapd
+        question: slapd/password1
+        vtype: boolean
+        value: ""
+        
+    - name: Configurar slapd/password2
+      ansible.builtin.debconf:
+        name: slapd
+        question: slapd/password2
+        vtype: boolean
+        value: ""
+        
+    - name: Configurar slapd/password_mismatch
+      ansible.builtin.debconf:
+        name: slapd
+        question: slapd/password_mismatch
+        vtype: note
+        value: ""
+        
+    - name: Configurar slapd/postinst_error
+      ansible.builtin.debconf:
+        name: slapd
+        question: slapd/postinst_error
+        vtype: note
+        value: ""
+        
+    - name: Configurar slapd/purge_database
+      ansible.builtin.debconf:
+        name: slapd
+        question: slapd/purge_database
+        vtype: boolean
+        value: false
+        
+    - name: Configurar slapd/upgrade_slapcat_failure
+      ansible.builtin.debconf:
+        name: slapd
+        question: slapd/upgrade_slapcat_failure
+        vtype: error
+        value: ""    
+
+    - name: Instalar paquete slapd
+      ansible.builtin.apt:
+        name: slapd
+        state: present
+        update_cache: yes
+
+      # slapd shared/organization string nodomain
+      # slapd slapd/domain string nodomain
+      # slapd slapd/dump_database select when needed
+      # slapd slapd/dump_database_destdir string /var/backups/slapd-VERSION
+      # slapd slapd/internal/adminpw password abc123.
+      # slapd slapd/internal/generated_adminpw password abc123. 
+      # slapd slapd/invalid_config boolean true
+      # slapd slapd/move_old_database boolean true
+      # slapd slapd/no_configuration boolean false
+      # slapd slapd/password1 password 
+      # slapd slapd/password2 password 
+      # slapd slapd/password_mismatch note 
+      # slapd slapd/postinst_error note 
+      # slapd slapd/purge_database boolean false
+      # slapd slapd/upgrade_slapcat_failure error

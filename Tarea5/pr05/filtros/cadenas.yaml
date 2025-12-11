@@ -1,0 +1,26 @@
+---
+- name: Ejemplos varios de filtros con CADENAS
+  hosts: srv1
+  vars:
+    cadena: "Esto es una cadena"
+
+  tasks:
+  - name: Mayúsculas
+    ansible.builtin.debug:
+      var: cadena | upper
+
+  - name: Minúsculas
+    ansible.builtin.debug:
+      var: cadena  | lower
+
+  - name: Reemplazar
+    ansible.builtin.debug:
+      var: cadena | replace("e","*")
+
+  - name: Reemplazar con mensaje
+    ansible.builtin.debug:
+      msg: 'La cadena reemplazada es: {{cadena | lower | replace("e","*")}}'
+
+  - name: Longitud de cadena
+    ansible.builtin.debug:
+      var: cadena | length

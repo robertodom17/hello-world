@@ -1,0 +1,19 @@
+---
+- name: Uso en playbook de when y variables del nodo a administrar para un Debian12
+  hosts: srv1
+  tasks:
+    - name: Leer configuración
+      ansible.builtin.include_vars: config.yaml
+
+    - name: debug var1
+      ansible.builtin.debug:
+         var: var1
+      when: debug_enabled
+
+    - name: debug ansible_os_family
+      ansible.builtin.debug:
+         var: ansible_os_family
+
+    - name: Listar directorios sobre Debian12
+      ansible.builtin.include_tasks: debian.yaml
+      when: ansible_os_family == "Debian" and ansible_distribution_major_version == "12"

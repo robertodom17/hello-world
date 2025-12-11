@@ -1,0 +1,11 @@
+all:
+  children:
+    servers:
+      hosts:
+        srv1:
+          ansible_host: 192.168.10.6
+        srv2:
+          ansible_host: 192.168.10.5
+      vars:
+        ansible_user: ansible
+        ansible_become: yes

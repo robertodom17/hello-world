@@ -1,0 +1,10 @@
+---
+- name: Variables por linea de comandos
+  hosts: srv1
+  # vars:
+  #   mensaje: "MENSAJE VAR INTERNO"
+
+  tasks:
+  - name: Variable de línea de comandos
+    ansible.builtin.debug:
+      msg: "Mostramos la variable pasada desde CLI: {{mensaje}}"

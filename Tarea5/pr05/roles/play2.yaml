@@ -1,0 +1,15 @@
+---
+- name: Ejemplos de un role
+  hosts: srv1
+  tasks:
+  - name: Primera tarea del play del PLAY
+    ansible.builtin.debug:
+      msg: "Comienzo el juego"
+  
+  - name: Incluir el role
+    import_role:
+      name: mariadb2
+
+  - name: Última tarea del PLAY
+    ansible.builtin.debug:
+      msg: "Se ha terminado el proceso {{software}}"

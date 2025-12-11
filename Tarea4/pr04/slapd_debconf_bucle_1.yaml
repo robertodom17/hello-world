@@ -1,0 +1,26 @@
+---
+- name: Instalar y configurar slapd mediante módulo debconf
+  hosts: srv1
+
+  tasks:
+    - name: Incluir root_password.yaml
+      ansible.builtin.include_vars:
+        file: recursos/root_password.yaml
+
+    - name: Incluir variables_1.yaml
+      ansible.builtin.include_vars:
+        file: recursos/variables_1.yaml
+
+    - name: Configurar shared/organization
+      ansible.builtin.debconf:
+        question: "{{ item.question }}"
+        name: slapd
+        vtype: "{{ item.vtype }}"
+        value: "{{ item.value }}"
+      loop: "{{ variables_debconf }}"
+
+    - name: Instalar paquete slapd
+      ansible.builtin.apt:
+        name: slapd
+        state: present
+        update_cache: yes

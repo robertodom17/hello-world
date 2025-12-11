@@ -1,0 +1,24 @@
+---
+- name: Variables externas al playbook
+  hosts: srv1
+
+  tasks:
+    # - name: Cargar variables desde f1.yaml
+    #   ansible.builtin.include_vars:
+    #     file: recursos/f1.yaml
+
+    # - name: Cargar variables desde f2.yaml
+    #   ansible.builtin.include_vars:
+    #     file: recursos/f2.yaml
+
+    - name: Cargar variables desde directorio
+      ansible.builtin.include_vars:
+        dir: recursos/
+
+    - name: Variable del fichero f1.yaml
+      ansible.builtin.debug:
+        msg: "Esta es una variable {{ variable1 }}"
+
+    - name: Variable del fichero f2.yaml
+      ansible.builtin.debug:
+        msg: "Esta es una variable {{ variable2 }}"

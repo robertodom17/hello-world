@@ -1,0 +1,68 @@
+---
+- name: Trabajar con TAGS 1
+  hosts: srv1
+  tags: 
+    - play1
+  tasks:
+
+  - name: Preparar desarrollo
+    ansible.builtin.debug:
+      msg: Preparar el entorno de desarrollo
+    tags:
+      - desarrollo
+
+  - name: Preparar producción
+    ansible.builtin.debug:
+      msg: Preparar el entorno de produccion
+    tags:
+      - produccion
+
+  - name: Instalar mysql
+    ansible.builtin.debug:
+      msg: "Instalando mysql"
+    tags:
+      - desarrollo
+      - produccion
+
+  - name: Instalar herramientas desarrollo
+    ansible.builtin.debug:
+      msg: "Proceso Terminado"
+    tags:
+      - desarrollo
+
+  - name: Instalar la seguridad de producción
+    ansible.builtin.debug:
+      msg: "Instalar el entornod de seguridad"
+    tags:
+      - produccion
+
+  - name: Desplegar aplicacion
+    ansible.builtin.debug:
+      msg: "Desplegar aplicación"
+    tags:
+      - desarrollo
+      - produccion
+
+  - name: Tarea con allways
+    ansible.builtin.debug:
+      msg: "Ejecutate siempre"
+    tags:
+      - allways
+
+  - name: Tarea con never
+    ansible.builtin.debug:
+      msg: "Nunca te ejecutas, la tarea no está concluida"
+    tags:
+      - never
+
+- name: Trabajar con TAGS 2
+  hosts: srv1
+  tags: 
+    - play2
+  tasks:
+
+  - name: Tarea playbook 2
+    ansible.builtin.debug:
+      msg: Ejecutamos la tarea del playbook 2
+    tags:
+      - desarrollo

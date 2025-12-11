@@ -1,0 +1,8 @@
+<h1>ESTOY EN UN BUCLE</h1>
+<h2>Lista de productos</h2>
+<ol>
+{% for producto in productos %}
+    <li> {{producto | upper}} </li>
+  {% endfor %}
+  <li> {{productos | join(', ')}}</li>
+</ol>

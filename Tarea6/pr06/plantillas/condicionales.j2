@@ -1,0 +1,13 @@
+{# Ejemplo con operadores lógicos and, or, not #}
+
+<h1> BIENVENIDO A MI PAGINA WEB DE ANSIBLE </h1>
+
+{% if user_age >= 18 and not permiso %}
+<h2> Eres adulto sin restricciones </h2>
+
+{% elif user_age < 18 or permiso %}
+<h2> Acceso restringido por edad o restricciones </h2>
+
+{% else %}
+<h2> Caso general o no definido </h2>
+{% endif %}

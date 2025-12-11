@@ -1,0 +1,13 @@
+#SPDX-License-Identifier: MIT-0
+galaxy_info:
+  author: Martín Gil Blanco
+  description: Instalar docker con ansible en Debian
+  company: Xunta de Galicia
+  license: MIT
+  min_ansible_version: "2.9"
+  galaxy_tags: []
+  platforms:
+    - name: Debian
+      versions:
+        - all
+dependencies: []

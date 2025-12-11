@@ -1,0 +1,20 @@
+---
+- name: Variables locales a tasks
+  hosts: srv1
+  vars:
+    variable_local: global
+
+  tasks:
+  - name: Variable locales
+    vars:
+      variable_local: "local"
+    ansible.builtin.debug:
+      msg: "Esta es una variable {{ variable_local }}"
+
+  - name: Variable locales dos
+    ansible.builtin.debug:
+      msg: "Esta es una variable {{ variable_local }}"
+
+  - name: Variable locales tres
+    ansible.builtin.debug:
+      msg: "Esta es una variable {{ variable_playbook }}"

@@ -1,0 +1,12 @@
+---
+- name: Variables de tipo FACT
+  hosts: srv1
+
+  tasks:
+  - name: Ver varaibles de tipo FACT
+    ansible.builtin.debug:
+      msg: "La arquitectura es {{ansible_facts['architecture']}} o {{ansible_facts.architecture}} y la ip es {{ansible_facts['all_ipv4_addresses'][0]}} "
+
+  - name: Usar diccionarios FACT
+    ansible.builtin.debug:
+      msg: "La información temporal es {{ansible_facts.date_time.day}} del {{ansible_facts.date_time.month}}"

@@ -1,0 +1,52 @@
+---
+- name: Ejecución de tareas para srv1
+  hosts: srv1
+
+  tasks:
+    - name: Crear el directorio /tmp/directorio
+      ansible.builtin.file:
+        path: /tmp/directorio
+        state: directory
+        mode: "0755"
+    
+    - name: Cambiar permisos y propietario
+      ansible.builtin.file:
+        path: /tmp/directorio
+        owner: ansible
+        group: ansible
+        mode: "0777"
+
+    # - name: Borrar el directorio anterior
+    #   ansible.builtin.file:
+    #     path: /tmp/directorio
+    #     state: "absent"
+
+- name: Ejecución de tareas para srv2
+  hosts: srv2
+  
+  tasks:
+    - name: Crear el grupo smr2
+      ansible.builtin.group:
+        name: smr2
+        state: present
+
+    - name: Crear el usuario martin con password cifrada, home y shell
+      ansible.builtin.user:
+        name: martin
+        group: smr2
+        state: present
+        home: /home/martin
+        shell: /bin/bash
+        password: "$6$WfguojIdWi5o8V8W$jx9rm9Z2ABaSXY8AHjOtFAWO1.u4MGG8iAve3O3PyXZtGTBOoS8ak0S5Mfs3LwasMFVuEqXrIcumR9n2RiKTf."
+        create_home: yes
+
+    # - name: Eliminar el usuario martin y su home
+    #   ansible.builtin.user:
+    #     name: martin
+    #     state: absent
+    #     remove: yes
+
+    # - name: Eliminar el grupo smr2
+    #   ansible.builtin.group:
+    #     name: smr2
+    #     state: absent

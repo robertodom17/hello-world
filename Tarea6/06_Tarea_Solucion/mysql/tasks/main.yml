@@ -1,0 +1,77 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for mysql
+- name: Eliminar paquetes MariaDB conflictivos
+  ansible.builtin.apt:
+    name: "{{ paquetes_conflictivos_mariadb }}"
+    state: absent
+    purge: yes
+  tags:
+    - instalacion_mysql
+
+- name: Configurar debconf mysql-apt-config
+  ansible.builtin.debconf:
+    name: "{{ initial.value.name }}"
+    question: "{{ initial.key }}"
+    value: "{{ initial.value.value }}"
+    vtype: "{{ initial.value.vtype }}"
+  loop: "{{ configuracion_inicial | dict2items }}"
+  loop_control:
+    loop_var: initial
+  tags:
+    - instalacion_mysql
+
+- name: Descargar paquete inicial
+  ansible.builtin.shell:
+    cmd: wget -O /tmp/{{ version_paquete }} https://dev.mysql.com/get/{{ version_paquete }}
+  tags:
+    - instalacion_mysql
+
+- name: Instalar paquete inicial
+  ansible.builtin.apt:
+    deb: /tmp/{{ version_paquete }}
+  tags:
+    - instalacion_mysql
+
+- name: Configurar debconf mysql-community-server
+  ansible.builtin.debconf:
+    name: "{{ server.value.name }}"
+    question: "{{ server.key }}"
+    value: "{{ server.value.value }}"
+    vtype: "{{ server.value.vtype }}"
+  loop: "{{ configuracion_servidor | dict2items }}"
+  loop_control:
+    loop_var: server
+  tags:
+    - instalacion_mysql
+
+- name: Instalar {{ software }} y python3-pymysql
+  ansible.builtin.apt:
+    name:
+      - "{{ software }}"
+      -  python3-pymysql
+    update_cache: yes
+  tags:
+    - instalacion_mysql
+
+- name: Asegurar que el servicio {{ servicio }} esté corriendo
+  ansible.builtin.systemd:
+    name: "{{ servicio }}"
+    state: started
+    enabled: yes
+  tags:
+    - instalacion_mysql
+
+- name: Crear usuario con contraseña, todos los privilegios de base de datos y 'WITH GRANT OPTION' en db1 y db2
+  community.mysql.mysql_user:
+    login_user: "root"
+    login_password: "{{ mysql_root_password }}"
+    state: present
+    name: "{{ current_mysql_user.key }}"
+    password: "{{ current_mysql_user.value.password }}"
+    priv: "{{ current_mysql_user.value.priv }}"
+  loop: "{{ mysql_users | dict2items }}"
+  loop_control:
+    loop_var: current_mysql_user
+  tags:
+    - usuarios_mysql

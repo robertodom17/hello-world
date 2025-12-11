@@ -1,0 +1,11 @@
+---
+- name: Instalar Docker CE en Debian
+  hosts: srv1
+  
+  roles:
+   - docker
+  
+  pre_tasks:
+  - name: Instalar docker
+    ansible.builtin.debug:
+      msg: Instalar Docker en Debian siguiendo la documentación aportada

@@ -1,0 +1,48 @@
+---
+- name: Primer playbook
+  hosts: srv1
+
+  tasks:
+    - name: Instalar paquetes
+      ansible.builtin.apt:
+        name:
+          - zip
+          - unzip
+        state: present
+        # update_cache: yes
+        # state: absent
+        # purge: yes
+
+    - name: Crear un fichero en /home/ansible llamado playbook.txt
+      ansible.builtin.file:
+        path: /home/ansible/playbook.txt
+        state: touch
+        owner: ansible
+        group: ansible
+        mode: "0755"
+        # state: absent
+
+    - name: Añadir texto al fichero
+      ansible.builtin.copy:
+        dest: /home/ansible/playbook.txt
+        content: "Contenido del fichero."
+
+    - name: Añadir un fichero con contenido
+      ansible.builtin.copy:
+        dest: /home/ansible/copia.txt
+        content: |
+          Hola que tal
+          Espero que bien.
+              Un saludo
+            Martin
+
+    - name: Añadir la cadena hola al fichero /home/ansible/saludo.txt
+      ansible.builtin.shell: |
+        if test "$(tail -1 /home/ansible/saludo.txt)" != "hola"
+        then
+           echo "hola" >> /home/ansible/saludo.txt
+        fi
+
+    - name: Mensaje final
+      ansible.builtin.debug:
+        msg: "Continuaremos aprendiendo de Ansible más adelante"

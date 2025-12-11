@@ -1,0 +1,9 @@
+- name: Listar archivos
+  ansible.builtin.shell: ls -la
+  register: resultado_ls
+
+- name: Mostrar salida de ls con stdout_
+  ansible.builtin.debug: var=resultado_ls.stdout      # ← cadena única
+
+- name: Mostrar salida de ls con stdout_lines
+  ansible.builtin.debug: var=resultado_ls.stdout_lines # ← lista (una línea por elemento)

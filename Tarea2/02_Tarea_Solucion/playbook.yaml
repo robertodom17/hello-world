@@ -1,0 +1,26 @@
+---
+- name: Tarea 2
+  hosts: srv1
+
+  tasks:
+    - name: Instalar el paquete git
+      ansible.builtin.apt:
+        name: git
+        state: present
+        update_cache: yes
+
+    - name: Crear un fichero /tmp/tarea2 con permisos 777
+      ansible.builtin.file:
+        path: /tmp/tarea2
+        state: touch
+        owner: root
+        group: root
+        mode: "0777"
+
+    - name: Añadir la cadena Tarea 2 al fichero /tmp/tarea2
+      ansible.builtin.shell:
+        cmd: |
+          if test "$(tail -1 /tmp/tarea2)" != "Tarea 2"
+          then
+             echo "Tarea 2" >> /tmp/tarea2
+          fi

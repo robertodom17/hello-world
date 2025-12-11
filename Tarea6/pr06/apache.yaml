@@ -1,0 +1,57 @@
+---
+- name: JINJA
+  hosts: srv1
+
+  tasks:
+    - name: Leer configuración
+      ansible.builtin.include_vars: 
+        file: config.yaml
+
+    - name: Instalar apache
+      ansible.builtin.apt:
+        name: apache2
+        update_cache: yes
+
+    - name: Crear directorio /var/www/grupo1
+      ansible.builtin.file:
+        path: /var/www/grupo1
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Crear directorio /var/www/grupo2
+      ansible.builtin.file:
+        path: /var/www/grupo2
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Crear sitio grupo1
+      ansible.builtin.template:
+        src: templates/var/www/grupo1/index.html.j2
+        dest: /var/www/grupo1/index.html
+
+    - name: Crear sitio grupo2
+      ansible.builtin.template:
+        src: templates/var/www/grupo2/index.html.j2
+        dest: /var/www/grupo2/index.html
+
+    - name: Crear sitios web apache
+      ansible.builtin.template:
+        src: templates/etc/apache2/sites-available/sites.conf.j2
+        dest: /etc/apache2/sites-available/sites.conf
+
+    - name: Deshabilitar sitio default en Apache
+      ansible.builtin.shell: 
+        cmd: a2dissite 000-default.conf
+
+    - name: Habilitar sitios web Apache
+      ansible.builtin.shell: 
+        cmd: a2ensite sites
+
+    - name: Restart apache2
+      ansible.builtin.service:
+        name: apache2
+        state: restarted

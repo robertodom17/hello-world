@@ -1,0 +1,52 @@
+---
+- name: Ejemplos de filtros
+  hosts: srv1
+  vars:
+      cadena: "Soy una cadena"
+      cadena: "100"
+      numero: 10
+      verdad: true
+      lista:
+        - Martín
+        - Alex
+        - Carlos
+      lista1: ['Martín','Alex','Carlos']
+      diccionario:
+          nombre: Alex
+          edad: 27
+      debug_enabled: no
+
+  tasks:
+  - name: Muestra la variable como patilla jinja2
+    ansible.builtin.debug:
+      msg: 'El número es: {{ numero }}'
+
+  - name: Muestra la variable
+    ansible.builtin.debug:
+      var: numero
+
+  - name: Convertir a cadena
+    ansible.builtin.debug:
+      var: numero | string
+
+  - name: Convertir a entero
+    ansible.builtin.debug:
+      var: cadena | int
+
+  - name: Convertir a entero 2
+    ansible.builtin.debug:
+      var: cadena2 | int
+
+  - name: Convertir a entero
+    ansible.builtin.debug:
+      var: cadena | bool
+
+  - name: Imprimir todas las Ansible Facts
+    ansible.builtin.debug:
+      var: ansible_facts
+    when: debug_enabled
+
+  - name: Visualizar las máquinas con una versión de distribución superior a la 10
+    ansible.builtin.debug:
+      msg: "{{ansible_facts.distribution_version}}"
+    when: ansible_distribution_version | int > 10

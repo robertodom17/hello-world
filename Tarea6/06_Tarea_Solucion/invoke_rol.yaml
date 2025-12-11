@@ -1,0 +1,32 @@
+---
+- name: Instalar MYSQL mediante rol
+  hosts: srv4
+
+  pre_tasks:
+    - name: Actualización de la caché de repositorios
+      ansible.builtin.apt:
+        update_cache: yes
+
+  tasks:
+    - name: Cargar fichero de vault con datos de usuarios y privilegios de mysql
+      ansible.builtin.include_vars:
+        file: mypasswords_vault.yaml
+
+    - name: Invocación a rol mysql
+      ansible.builtin.include_role:
+        name: mysql
+      tags:
+        - instalacion_mysql
+        - usuarios_mysql
+      vars:
+        mysql_root_password: "{{ vault_mysql_root_pw }}"
+        mysql_users:
+          bob:
+            password: "{{ vault_mysql_users_passwords.bob }}"
+            priv:
+              'db1.*': 'ALL,GRANT'
+              'db2.*': 'ALL,GRANT'
+          john:
+            password: "{{ vault_mysql_users_passwords.john }}"
+            priv:
+              'db3.*': 'ALL,GRANT'

@@ -1,0 +1,21 @@
+---
+- name: Ejemplos de un role
+  hosts: srv1
+  roles:
+    # - mariadb
+    - mariadb2
+
+  pre_tasks:
+    - name: Actualización de la caché
+      ansible.builtin.apt:
+        update_cache: yes
+
+  tasks:
+  - name: Última tarea del play
+    ansible.builtin.debug:
+      msg: "Se ha instalado el software {{software}}"
+
+  post_tasks:
+    - name: Información de finalización
+      ansible.builtin.debug:
+        msg: "Finalizamos todo el proceso de ejecución del playbook"

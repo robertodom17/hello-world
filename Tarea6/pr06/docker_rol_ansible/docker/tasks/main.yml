@@ -1,0 +1,56 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for docker
+- name: Actualizar caché de APT
+  ansible.builtin.apt:
+    update_cache: yes
+  
+- name: Instalar paquetes prerequisitos
+  ansible.builtin.apt:
+    name:
+      - ca-certificates
+      - curl
+    state: present
+    
+- name: Crear directorio para keyrings
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+    
+- name: Descargar clave GPG de Docker
+  ansible.builtin.get_url:
+    url: "{{ docker_gpg_url }}"
+    dest: "{{ docker_gpg_path }}"
+    mode: 'a+r'
+    
+- name: Agregar repositorio de Docker usando deb822
+  ansible.builtin.deb822_repository:
+    name: docker
+    types: deb
+    uris: https://download.docker.com/linux/debian
+    suites: "{{ ansible_distribution_release }}"
+    components: stable
+    architectures: "{{ ansible_architecture | replace('x86_64', 'amd64') }}"
+    signed_by: "{{ docker_gpg_path }}"
+    state: present
+    
+- name: Actualizar caché APT después de agregar repositorio
+  ansible.builtin.apt:
+    update_cache: yes
+    
+- name: Instalar Docker CE y componentes
+  ansible.builtin.apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    state: present
+    
+- name: Iniciar y habilitar servicio Docker
+  ansible.builtin.systemd:
+    name: docker
+    enabled: yes
+    state: started

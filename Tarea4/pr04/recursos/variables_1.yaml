@@ -1,0 +1,60 @@
+variables_debconf:
+  - question: shared/organization
+    vtype: string
+    value: nodomain
+
+  - question: slapd/domain
+    vtype: string
+    value: nodomain
+
+  - question: slapd/dump_database
+    vtype: select
+    value: when needed
+
+  - question: slapd/dump_database_destdir
+    vtype: string
+    value: /var/backups/slapd-VERSION
+
+  - question: slapd/internal/adminpw
+    vtype: password
+    value: "{{ ldap_admin_password }}"
+
+  - question: slapd/internal/generated_adminpw
+    vtype: password
+    value: "{{ ldap_admin_password }}"
+
+  - question: slapd/invalid_config
+    vtype: boolean
+    value: true
+
+  - question: slapd/move_old_database
+    vtype: boolean
+    value: true
+
+  - question: slapd/no_configuration
+    vtype: boolean
+    value: false
+
+  - question: slapd/password1
+    vtype: boolean
+    value: ""
+
+  - question: slapd/password2
+    vtype: boolean
+    value: ""
+
+  - question: slapd/password_mismatch
+    vtype: note
+    value: ""
+
+  - question: slapd/postinst_error
+    vtype: note
+    value: ""
+
+  - question: slapd/purge_database
+    vtype: boolean
+    value: false
+
+  - question: slapd/upgrade_slapcat_failure
+    vtype: error
+    value: ""

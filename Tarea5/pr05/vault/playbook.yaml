@@ -1,0 +1,11 @@
+---
+- name: Ansible Vault
+  hosts: srv1
+  tasks:
+  - name: Incluir fichero de datos encriptados
+    ansible.builtin.include_vars:
+      file: vault.yaml
+
+  - name: Mostrar el contenido de Ansible Vault
+    ansible.builtin.debug:
+      msg: "La contraseña una vez desencriptada es: {{ contraseña }}"

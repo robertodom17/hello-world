@@ -1,0 +1,19 @@
+---
+- name: Practica de variables
+  hosts: srv1
+  become: yes
+  vars:
+    saludo:
+      - "Buenos días amigo"
+      - "soy una variable y espero que estés bien"
+    informacion:
+      curso: "Administrar servidores con Ansible"
+      plataforma: "Platega"
+      destinatarios: "Docentes de la Consellería de Educación"
+      responsables: [Martín, Antonio, Carlos]
+
+  tasks:
+    - name: Bienvenida
+      ansible.builtin.copy:
+        content: "{{saludo[0]}}, {{saludo[1]}} y los destinatarios son {{informacion.destinatarios}} siendo el responsable {{informacion.responsables[0]}}"
+        dest: /etc/motd
